@@ -9,9 +9,18 @@ response = requests.get(URL)
 best_movies = response.text
 
 soup = BeautifulSoup(best_movies, "html.parser")
-movies = soup.find_all(class_="title")
-movie_title = []
+all_movies = soup.find_all(class_="title")
+movie_titles = []
 
-for movie_tag in movies:
-    movie_title = movie_tag.getText()
-    print(movie_title)
+for movie in all_movies:
+    title = movie.getText()
+    movie_titles.append(title)
+
+movie_titles.reverse()
+top_100_movies = movie_titles
+
+# print(top_100_movies)
+
+with open ("top_100_movies.txt", mode="w") as file:
+    for movie in top_100_movies:
+        file.write(f"{movie}\n")
